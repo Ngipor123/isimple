@@ -1,0 +1,118 @@
+---
+const navItems = [
+  { label: 'iPhone remonts', path: '/iphone-remonts/' },
+  { label: 'iPad remonts', path: '/ipad-remonts/' },
+  { label: 'Telefonu remonts', path: '/telefonu-remonts/' },
+  { label: 'Datoru remonts', path: '/datoru-remonts/' },
+  { label: 'Dyson remonts', path: '/dyson-puteklsuceju-remonts/' },
+  { label: 'Par mums', path: '/par-mums/' },
+  { label: 'Kontakti', path: '/kontakti/' },
+];
+---
+
+<header class="bg-graphite-header sticky top-0 z-50 border-b border-white/10">
+  <div class="w-full px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 sm:h-18 items-center">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:rounded">
+        <img src="/images/isimple_logo_BALTS.png.webp" alt="iSimple.lv" class="w-44 sm:w-56 h-auto object-contain" />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-4 xl:gap-5" aria-label="Main navigation">
+        {navItems.map((item) => (
+          <a
+            href={item.path}
+            class="whitespace-nowrap text-sm font-medium text-text-secondary hover:text-text-primary hover:underline decoration-brand-orange/50 underline-offset-8 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:rounded"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-3">
+        <!-- CTA Button -->
+        <a
+          href="tel:+37122487593"
+          class="hidden sm:inline-flex btn-primary py-2.5 px-4 text-xs whitespace-nowrap font-bold"
+        >
+          📞 +371 22 487 593
+        </a>
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          class="lg:hidden p-3 rounded-lg text-text-secondary hover:bg-graphite-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+        >
+          <svg id="icon-open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-graphite-header px-4 pt-3 pb-8 space-y-2 fixed inset-x-0 top-16 bottom-0 z-[10000] overflow-y-auto">
+    {navItems.map((item) => (
+      <a
+        href={item.path}
+        class="block px-3 py-2.5 rounded-lg text-sm font-medium text-text-secondary hover:bg-graphite-surface hover:text-text-primary transition-colors"
+      >
+        {item.label}
+      </a>
+    ))}
+    <a
+      href="tel:+37122487593"
+      class="flex items-center justify-center gap-2 mt-3 w-full text-center px-4 py-3 bg-brand-orange text-graphite-header text-base font-extrabold rounded-lg"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+      </svg>
+      Zvanīt: +371 22 487 593
+    </a>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    
+    // Toggle body scroll locking on mobile
+    if (!isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu && !menu.classList.contains('hidden')) {
+      menu.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      btn?.focus();
+    }
+  });
+</script>

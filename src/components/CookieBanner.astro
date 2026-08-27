@@ -1,0 +1,138 @@
+---
+// Cookie Consent Banner
+---
+
+<div id="cookie-banner" class="cookie-banner-container hidden" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-desc">
+  <div class="cookie-banner-content">
+    <h3 id="cookie-title" class="cookie-title">Mēs izmantojam sīkdatnes</h3>
+    <p id="cookie-desc" class="cookie-desc">
+      Izmantojam nepieciešamās sīkdatnes mājaslapas darbībai un analītikas sīkdatnes, lai saprastu, kā uzlabot iSimple.lv.
+    </p>
+    <div class="cookie-actions">
+      <button id="cookie-reject" class="cookie-btn cookie-btn-reject">Noraidīt</button>
+      <button id="cookie-accept" class="cookie-btn cookie-btn-accept">Pieņemt</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner-container {
+    position: fixed;
+    bottom: 90px;
+    left: 20px;
+    right: 20px;
+    max-width: 500px;
+    background: #0f172a; /* matches near-black */
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    z-index: 10000;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (min-width: 640px) {
+    .cookie-banner-container {
+      left: 28px;
+      right: auto;
+      bottom: 28px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .cookie-banner-container {
+      bottom: 20px;
+    }
+  }
+
+  .cookie-banner-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cookie-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .cookie-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #94a3b8; /* slate-400 */
+    margin: 0;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .cookie-btn {
+    flex: 1;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
+    text-align: center;
+  }
+
+  .cookie-btn-reject {
+    background: transparent;
+    border: 1px solid #475569;
+    color: #ffffff;
+  }
+
+  .cookie-btn-reject:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #64748b;
+  }
+
+  .cookie-btn-accept {
+    background: #f97316; /* brand-orange */
+    color: #ffffff;
+  }
+
+  .cookie-btn-accept:hover {
+    background: #ea6700;
+  }
+
+  .cookie-btn:active {
+    transform: scale(0.97);
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+
+    if (!banner || !acceptBtn || !rejectBtn) return;
+
+    // Check localStorage
+    const consent = localStorage.getItem('cookie-consent');
+    if (!consent) {
+      // Small delay to make it feel natural
+      setTimeout(() => {
+        banner.classList.remove('hidden');
+      }, 1000);
+    }
+
+    acceptBtn.addEventListener('click', () => {
+      localStorage.setItem('cookie-consent', 'accepted');
+      banner.classList.add('hidden');
+    });
+
+    rejectBtn.addEventListener('click', () => {
+      localStorage.setItem('cookie-consent', 'rejected');
+      banner.classList.add('hidden');
+    });
+  })();
+</script>

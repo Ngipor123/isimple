@@ -1,0 +1,99 @@
+---
+import { useTranslations } from '../lib/i18n';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const reviews = [
+  {
+    name: 'Artūrs Ozoliņš',
+    rating: 5,
+    date: '2026-07-12',
+    text: {
+      lv: 'Lielisks serviss! iPhone 13 ekrānu nomainīja nepilnas stundas laikā. Ļoti laipna apkalpošana Dreiliņos.',
+      ru: 'Отличный сервис! Экран на iPhone 13 поменяли меньше чем за час. Очень вежливое обслуживание в Дрейлини.',
+      en: 'Great service! Changed my iPhone 13 screen in less than an hour. Very polite service in Dreilini.'
+    }
+  },
+  {
+    name: 'Jelena P.',
+    rating: 5,
+    date: '2026-08-01',
+    text: {
+      lv: 'Vienmēr ātri un kvalitatīvi. Jau vairākas reizes esam labojuši gan telefonus, gan planšetes visai ģimenei.',
+      ru: 'Всегда быстро и качественно. Уже несколько раз ремонтировали и телефоны, и планшеты для всей семьи.',
+      en: 'Always fast and high quality. We have repaired both phones and tablets for the whole family several times.'
+    }
+  },
+  {
+    name: 'Kristaps K.',
+    rating: 5,
+    date: '2026-08-18',
+    text: {
+      lv: 'Labākās cenas Rīgā un lieliska kvalitāte. Noteikti iesaku!',
+      ru: 'Лучшие цены в Риге и отличное качество. Определенно рекомендую!',
+      en: 'Best prices in Riga and excellent quality. Definitely recommend!'
+    }
+  }
+];
+---
+
+<section class="py-20 bg-graphite-alt border-t border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="font-display text-3xl font-bold text-text-primary tracking-tight sm:text-4xl">
+        Ko par mums saka <span class="text-brand-orange">klienti</span>
+      </h2>
+      <p class="mt-4 text-lg text-text-secondary">
+        {t('reviews.subtitle')}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {reviews.map((review) => (
+        <div class="bg-graphite-surface border border-white/10 p-6 rounded-lg flex flex-col justify-between">
+          <div>
+            <!-- Stars -->
+            <div class="flex items-center space-x-1 mb-4 text-amber-400">
+              {Array.from({ length: review.rating }).map(() => (
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+
+            <!-- Review Text -->
+            <p class="text-text-secondary text-sm italic leading-relaxed">
+              "{review.text[lang as 'lv' | 'ru' | 'en'] || review.text.lv}"
+            </p>
+          </div>
+
+          <!-- Reviewer -->
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="font-semibold text-sm text-text-primary">{review.name}</span>
+            <span class="text-xs text-text-muted">{review.date}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Google Review CTA -->
+    <div class="mt-12 text-center">
+      <a
+        href="https://www.google.com/maps/search/iSimple+T%2FC+S%C4%81ga+Bi%C4%B7eru+iela+4+Dreili%C5%86i/@56.9538466,24.2255767,17z/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center space-x-2 text-sm font-semibold text-text-secondary hover:text-brand-orange transition-colors"
+      >
+        <span>Lasīt visas atsauksmes Google</span>
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

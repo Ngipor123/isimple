@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "home": "Home",
+    "iphone": "iPhone Repair",
+    "ipad": "iPad Repair",
+    "services": "Services",
+    "news": "News",
+    "about": "About Us",
+    "contacts": "Contacts",
+    "dyson": "Dyson Repair",
+    "back": "Back"
+  },
+  "calculator": {
+    "title": "Price Calculator",
+    "subtitle": "Select your iPhone model to see repair costs instantly",
+    "select_model": "Select model",
+    "more_details": "More details",
+    "contact_us": "Book a Repair",
+    "service_type": "Repair Type",
+    "price": "Price",
+    "guarantee": "Warranty",
+    "time": "Time",
+    "types": {
+      "screen_orig": "Screen (Original)",
+      "screen_copy": "Screen (Copy)",
+      "battery": "Battery",
+      "camera": "Camera",
+      "body": "Body/Back Glass",
+      "home_button": "Home Button / Touch ID",
+      "charging_port": "Charging Port"
+    },
+    "guarantee_6m": "6 months",
+    "guarantee_3m": "3 months",
+    "no_price": "Price on request. Please contact us!"
+  },
+  "contacts_info": {
+    "title": "Contacts",
+    "address_label": "Address",
+    "address_value": "Biķeru iela 4, Dreiliņi, Stopiņu pagasts, Ropažu novads, LV-2130",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "working_hours_label": "Working Hours",
+    "working_hours_value": "Monday - Saturday: 10:00 - 21:00, Sunday: 10:00 - 20:00"
+  },
+  "form": {
+    "title": "Contact Us",
+    "name": "Your name",
+    "phone": "Phone number",
+    "message": "Message",
+    "submit": "Send Request",
+    "success": "Thank you! Your message has been sent. We will contact you shortly.",
+    "error": "Error sending message. Please try again or call us."
+  },
+  "reviews": {
+    "title": "What our clients say",
+    "subtitle": "We pride ourselves on our quality of work and customer satisfaction"
+  },
+  "hero": {
+    "reviews_badge": "Google Reviews",
+    "reviews_rating": "5.0",
+    "reviews_count": "50+ reviews"
+  },
+  "process": {
+    "title": "How the repair works",
+    "subtitle": "A simple and transparent process — from inquiry to a fixed device",
+    "step1_title": "Contact Us",
+    "step1_desc": "Call, message, or walk in — we respond quickly and help you find the best solution.",
+    "step2_title": "Free Diagnostics",
+    "step2_desc": "We carefully inspect the device and pinpoint the issue. Diagnostics are completely free.",
+    "step3_title": "Approval",
+    "step3_desc": "We explain the problem and propose solutions. Repair starts only with your approval.",
+    "step4_title": "Repair",
+    "step4_desc": "We replace the part and perform the repair with professional tools. Most repairs take 20–60 minutes.",
+    "step5_title": "Check & Handover",
+    "step5_desc": "We test all functionality and hand over the device with a 6-month warranty on the work done."
+  },
+  "branch": {
+    "title": "Our Branch",
+    "saga_name": "Sāga Shopping Centre Branch",
+    "saga_address": "Biķeru iela 4, Dreiliņi, LV-2130",
+    "saga_phone": "+371 22 487 593",
+    "open": "Open",
+    "closed": "Closed",
+    "opens_at": "Opens at",
+    "closes_at": "Closes at",
+    "working_hours": "Working Hours",
+    "mon_fri": "Monday–Friday",
+    "sat": "Saturday",
+    "sun": "Sunday",
+    "waze": "Open in Waze",
+    "google_maps": "Google Maps"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Have questions? Find answers to the most common ones here.",
+    "q1": "How long does a repair take?",
+    "a1": "Most repairs are completed in 20–60 minutes. Screen replacement from 20 minutes, battery replacement from 30 minutes. More complex cases may take up to 24 hours.",
+    "q2": "Are original parts used?",
+    "a2": "We offer both genuine Apple parts and high-quality alternatives. You can choose the option that best fits your budget and needs.",
+    "q3": "What warranty is provided on repairs?",
+    "a3": "We provide a 6-month warranty on all repairs. If the same issue recurs, we fix it again at no charge.",
+    "q4": "Is diagnostics free?",
+    "a4": "Yes, diagnostics are completely free. Even if you decide not to proceed with the repair, there is no charge for checking the device.",
+    "q5": "Can I walk in without an appointment?",
+    "a5": "Yes, walk-ins are welcome. However, to avoid waiting, you can call or message us in advance."
+  },
+  "model": {
+    "why_us_title": "Why choose us?",
+    "feature_parts": "Parts always in stock",
+    "feature_warranty": "6 months warranty",
+    "feature_speed": "Repair from 20 minutes",
+    "feature_free_diag": "Free diagnostics"
+  },
+  "latest_posts": {
+    "label": "News",
+    "title": "Latest Articles",
+    "read_more": "Read more",
+    "all_posts": "All articles"
+  },
+  "footer": {
+    "description": "Professional Apple and other device repair service in Riga, Dreilini.",
+    "rights": "All rights reserved."
+  }
+}

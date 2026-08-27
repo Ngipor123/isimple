@@ -1,0 +1,6 @@
+/apple-serviss/iphone-remonts/*  /iphone-remonts/:splat  301
+/apple-serviss/ipad-remonts/*    /ipad-remonts/:splat    301
+/dyson-remonts/*                 /dyson-puteklsuceju-remonts/:splat  301
+/ru/*                            /                        301
+/en/*                            /                        301
+/pakalpojumi/                    /                        301

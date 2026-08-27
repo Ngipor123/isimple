@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lang = 'lv';
+---
+<BaseLayout title="404 - Lapa nav atrasta | iSimple.lv" description="Lapa nav atrasta" lang={lang}>
+  <section class="min-h-[60vh] flex items-center justify-center text-center px-4">
+    <div>
+      <h1 class="text-8xl font-black text-brand-orange mb-4">404</h1>
+      <h2 class="text-2xl font-bold text-text-primary mb-4">Lapa nav atrasta</h2>
+      <p class="text-text-secondary mb-8">Страница не найдена / Page not found</p>
+      <a href="/" class="inline-flex items-center justify-center px-6 py-3.5 border border-transparent text-base font-bold rounded-xl text-white bg-brand-orange hover:bg-opacity-95 shadow-md hover:shadow-lg transition-all">← Sākums</a>
+    </div>
+  </section>
+</BaseLayout>

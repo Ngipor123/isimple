@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "home": "Sākums",
+    "iphone": "iPhone remonts",
+    "ipad": "iPad remonts",
+    "services": "Pakalpojumi",
+    "news": "Jaunumi",
+    "about": "Par mums",
+    "contacts": "Kontakti",
+    "dyson": "Dyson remonts",
+    "back": "Atpakaļ"
+  },
+  "calculator": {
+    "title": "Cenu kalkulators",
+    "subtitle": "Izvēlieties savu iPhone modeli un uzziniet remonta cenu uzreiz",
+    "select_model": "Izvēlieties modeli",
+    "more_details": "Sīkāk par modeli",
+    "contact_us": "Pieteikt remontu",
+    "service_type": "Remonta veids",
+    "price": "Cena",
+    "guarantee": "Garantija",
+    "time": "Laiks",
+    "types": {
+      "screen_orig": "Ekrāns (Oriģināls)",
+      "screen_copy": "Ekrāns (Kopija)",
+      "battery": "Baterija",
+      "camera": "Kamera",
+      "body": "Korpuss",
+      "home_button": "Poga Home / Touch ID",
+      "charging_port": "Lādēšanas ligzda"
+    },
+    "guarantee_6m": "6 mēneši",
+    "guarantee_3m": "3 mēneši",
+    "no_price": "Cenas tiek precizētas. Lūdzu, sazinieties ar mums!"
+  },
+  "contacts_info": {
+    "title": "Kontakti",
+    "address_label": "Adrese",
+    "address_value": "Biķeru iela 4, Dreiliņi, Stopiņu pagasts, Ropažu novads, LV-2130",
+    "phone_label": "Tālrunis",
+    "email_label": "E-pasts",
+    "working_hours_label": "Darba laiks",
+    "working_hours_value": "Pirmdiena - Sestdiena: 10:00 - 21:00, Svētdiena: 10:00 - 20:00"
+  },
+  "form": {
+    "title": "Sazinieties ar mums",
+    "name": "Jūsu vārds",
+    "phone": "Tālrunis",
+    "message": "Ziņojums",
+    "submit": "Nosūtīt pieteikumu",
+    "success": "Paldies! Jūsu pieteikums ir saņemts. Mēs drīz ar Jums sazināsimies.",
+    "error": "Kļūda nosūtot ziņu. Lūdzu, mēģiniet vēlreiz vai zvaniet."
+  },
+  "reviews": {
+    "title": "Ko par mums saka klienti",
+    "subtitle": "Mēs lepojamies ar savu darbu un klientu apmierinātību"
+  },
+  "hero": {
+    "reviews_badge": "Google atsauksmes",
+    "reviews_rating": "5.0",
+    "reviews_count": "Vairāk nekā 50 atsauksmes"
+  },
+  "process": {
+    "title": "Kā notiek remonts",
+    "subtitle": "Vienkāršs un caurspīdīgs process — no pieteikuma līdz gatavai ierīcei",
+    "step1_title": "Pieteikties",
+    "step1_desc": "Zvaniet, rakstiet vai ierodieties — mēs atbildam ātri un palīdzam izvēlēties labāko risinājumu.",
+    "step2_title": "Bezmaksas diagnostika",
+    "step2_desc": "Rūpīgi pārbaudām ierīci un precīzi nosakām bojājumu. Diagnostika ir bez maksas.",
+    "step3_title": "Apstiprinājums",
+    "step3_desc": "Pastāstām par problēmu un piedāvātajiem risinājumiem. Remontu sākam tikai ar jūsu piekrišanu.",
+    "step4_title": "Remonts",
+    "step4_desc": "Mainām detaļu un veicam remontu ar profesionāliem instrumentiem. Lielākajā daļā gadījumu — 20–60 minūtes.",
+    "step5_title": "Pārbaude un nodošana",
+    "step5_desc": "Pārbaudām visu funkcionalitāti un nododam ierīci ar 6 mēnešu garantiju uz veikto darbu."
+  },
+  "branch": {
+    "title": "Mūsu filiāle",
+    "saga_name": "T/C Sāga filiāle",
+    "saga_address": "Biķeru iela 4, Dreiliņi, LV-2130",
+    "saga_phone": "+371 22 487 593",
+    "open": "Atvērts",
+    "closed": "Slēgts",
+    "opens_at": "Atveras plkst.",
+    "closes_at": "Slēdzas plkst.",
+    "working_hours": "Darba laiks",
+    "mon_fri": "Pirmdiena–Piektdiena",
+    "sat": "Sestdiena",
+    "sun": "Svētdiena",
+    "waze": "Atvērt Waze",
+    "google_maps": "Google Maps"
+  },
+  "faq": {
+    "title": "Biežāk uzdotie jautājumi",
+    "subtitle": "Neskaidrs? Šeit atradīsit atbildes uz populārākajiem jautājumiem.",
+    "q1": "Cik ilgs laiks nepieciešams remontam?",
+    "a1": "Lielākā daļa remontdarbu tiek veikti 20–60 minūšu laikā. Ekrāna nomaiņa — no 20 minūtēm, baterijas nomaiņa — no 30 minūtēm. Sarežģītāki gadījumi var aizņemt līdz 24 stundām.",
+    "q2": "Vai remonts tiek veikts ar oriģinālajām detaļām?",
+    "a2": "Mēs piedāvājam gan oriģinālās Apple detaļas, gan augstas kvalitātes analogus. Jūs varēsiet izvēlēties piemērotāko variantu atbilstoši budžetam un vajadzībām.",
+    "q3": "Kāda garantija tiek sniegta uz remontu?",
+    "a3": "Uz visiem remontdarbiem sniedzam 6 mēnešu garantiju. Tas nozīmē, ka problēmas atkārtošanās gadījumā veicam atkārtotu remontu bez maksas.",
+    "q4": "Vai diagnostika ir bezmaksas?",
+    "a4": "Jā, diagnostika ir pilnīgi bez maksas. Pat ja nolemjat neveikt remontu, jūs neko nemaksāsiet par ierīces pārbaudi.",
+    "q5": "Vai varu ierasties bez iepriekšēja pieraksta?",
+    "a5": "Jā, mēs pieņemam apmeklētājus bez iepriekšēja pieraksta. Tomēr, lai izvairītos no gaidīšanas, varat iepriekš piezvanīt vai rakstīt."
+  },
+  "model": {
+    "why_us_title": "Kāpēc izvēlēties mūs?",
+    "feature_parts": "Detaļas vienmēr uz vietas",
+    "feature_warranty": "6 mēnešu garantija",
+    "feature_speed": "Remonts no 20 minūtēm",
+    "feature_free_diag": "Bezmaksas diagnostika"
+  },
+  "latest_posts": {
+    "label": "Jaunumi",
+    "title": "Pēdējās ziņas",
+    "read_more": "Lasīt vairāk",
+    "all_posts": "Visas ziņas"
+  },
+  "footer": {
+    "description": "Profesionāls Apple un citu iekārtu remonts Rīgā, Dreiliņos.",
+    "rights": "Visas tiesības aizsargātas."
+  }
+}

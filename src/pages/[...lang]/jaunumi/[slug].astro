@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getPosts } from '../../../lib/sanity';
+import { getLocalizedPath } from '../../../lib/i18n';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+
+  return posts.map((post: any) => ({
+    params: { lang: undefined, slug: post.slug },
+    props: { lang: 'lv', post, posts },
+  }));
+}
+
+const { lang, post, posts } = Astro.props;
+const l = lang as 'lv' | 'ru' | 'en';
+
+const title = post.title[l] || post.title.lv;
+const excerpt = post.excerpt[l] || post.excerpt.lv;
+
+const labels = {
+  lv: {
+    back: 'Visi jaunumi',
+    news: 'Jaunumi',
+    other: 'Citi raksti',
+    read: 'Lasīt vairāk',
+    ctaTitle: 'Nepieciešams remonts?',
+    ctaText: 'Zvani vai raksti — konsultācija un diagnostika bez maksas.',
+    ctaBtn: 'Sazināties',
+  },
+  ru: {
+    back: 'Все новости',
+    news: 'Новости',
+    other: 'Другие статьи',
+    read: 'Читать далее',
+    ctaTitle: 'Нужен ремонт?',
+    ctaText: 'Звоните или пишите — консультация и диагностика бесплатно.',
+    ctaBtn: 'Связаться',
+  },
+  en: {
+    back: 'All news',
+    news: 'News',
+    other: 'Other articles',
+    read: 'Read more',
+    ctaTitle: 'Need a repair?',
+    ctaText: 'Call or write to us — consultation and diagnostics are free.',
+    ctaBtn: 'Contact us',
+  },
+};
+const c = labels[l] || labels.lv;
+
+const otherPosts = posts.filter((p: any) => p.slug !== post.slug);
+const formattedDate = post.date;
+const siteUrl = 'https://isimple.lv';
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": excerpt,
+  "image": post.image ? (post.image.startsWith('http') ? post.image : `${siteUrl}${post.image}`) : `${siteUrl}/images/og-image.jpg`,
+  "datePublished": post.date,
+  "dateModified": post.date,
+  "author": {
+    "@type": "Organization",
+    "name": "iSimple.lv",
+    "url": "https://isimple.lv"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "iSimple.lv",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/favicon-192x192.png`
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${siteUrl}${getLocalizedPath(`/jaunumi/${post.slug}/`, lang)}`
+  }
+};
+---
+
+<BaseLayout
+  title={`${title} — iSimple.lv`}
+  description={excerpt}
+  lang={lang}
+  ogImage={post.image}
+  ogType="article"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <article class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Breadcrumb -->
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <a
+          href={getLocalizedPath('/jaunumi/', lang)}
+          class="inline-flex items-center gap-2 text-text-secondary hover:text-brand-orange transition-colors font-medium"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          {c.back}
+        </a>
+      </nav>
+
+      <!-- Header -->
+      <header class="space-y-4">
+        <span class="section-label">{c.news}</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-text-primary tracking-tight leading-tight">
+          {title}
+        </h1>
+        <time class="block text-sm text-text-muted font-semibold" datetime={post.date}>{formattedDate}</time>
+      </header>
+
+      <!-- Hero image -->
+      <img
+        src={post.image || '/images/og-image.jpg'}
+        alt={title}
+        class="w-full aspect-[16/9] object-cover rounded-2xl border border-white/10 mt-8"
+        loading="eager"
+      />
+
+      <!-- Body -->
+      <div class="mt-8 space-y-5 text-base leading-relaxed text-text-secondary">
+        <p class="text-lg text-text-primary font-medium leading-relaxed">{excerpt}</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="card card-shadow mt-12 p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+        <div class="space-y-1">
+          <p class="text-lg font-bold text-text-primary">{c.ctaTitle}</p>
+          <p class="text-sm text-text-secondary">{c.ctaText}</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="tel:+37122487593" class="btn-secondary whitespace-nowrap">+371 22 487 593</a>
+          <a href={getLocalizedPath('/kontakti/', lang)} class="btn-orange whitespace-nowrap">{c.ctaBtn}</a>
+        </div>
+      </div>
+
+      <!-- Other articles -->
+      {otherPosts.length > 0 && (
+        <section class="mt-16">
+          <h2 class="section-heading mb-6">{c.other}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {otherPosts.map((p: any) => (
+              <a
+                href={getLocalizedPath(`/jaunumi/${p.slug}/`, lang)}
+                class="card card-hover card-shadow card-shadow-hover overflow-hidden flex flex-col group"
+              >
+                <img
+                  src={p.image || '/images/og-image.jpg'}
+                  alt={p.title[l] || p.title.lv}
+                  class="w-full h-40 object-cover border-b border-white/10"
+                  loading="lazy"
+                />
+                <div class="p-5 space-y-2">
+                  <span class="text-xs text-text-muted font-semibold">{p.date}</span>
+                  <h3 class="text-base font-bold text-text-primary group-hover:text-brand-orange transition-colors leading-snug">
+                    {p.title[l] || p.title.lv}
+                  </h3>
+                  <span class="inline-block text-sm font-bold text-brand-orange">{c.read} →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+    </div>
+  </article>
+</BaseLayout>

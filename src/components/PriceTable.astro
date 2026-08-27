@@ -1,0 +1,82 @@
+---
+import { useTranslations } from '../lib/i18n';
+
+interface Props {
+  prices: {
+    screen_orig?: number | null;
+    screen_copy?: number | null;
+    battery?: number | null;
+    camera?: number | null;
+    body?: number | null;
+    home_button?: number | null;
+    charging_port?: number | null;
+  };
+  lang: string;
+  slug: string;
+}
+
+const { prices, lang, slug } = Astro.props;
+const t = useTranslations(lang);
+
+const repairTypes = [
+  { key: 'screen_orig', label: t('calculator.types.screen_orig'), time: '40-60 min', guarantee: t('calculator.guarantee_6m') },
+  { key: 'screen_copy', label: t('calculator.types.screen_copy'), time: '40-60 min', guarantee: t('calculator.guarantee_3m') },
+  { key: 'battery', label: t('calculator.types.battery'), time: '30-40 min', guarantee: t('calculator.guarantee_6m') },
+  { key: 'camera', label: t('calculator.types.camera'), time: '40-60 min', guarantee: t('calculator.guarantee_6m') },
+  { key: 'body', label: t('calculator.types.body'), time: '2-4 h', guarantee: t('calculator.guarantee_6m') },
+  { key: 'home_button', label: t('calculator.types.home_button'), time: '30 min', guarantee: t('calculator.guarantee_3m') },
+  { key: 'charging_port', label: t('calculator.types.charging_port'), time: '40-60 min', guarantee: t('calculator.guarantee_6m') },
+];
+
+const activeRepairs = repairTypes.map(r => {
+  const price = (prices as any)[r.key];
+  return { ...r, price };
+}).filter(r => r.price !== undefined && r.price !== null);
+---
+
+<div class="overflow-x-auto rounded-xl border border-white/10">
+  <table class="min-w-full divide-y divide-white/10">
+    <thead class="bg-graphite-alt border-b border-white/10">
+      <tr>
+        <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+          {t('calculator.service_type')}
+        </th>
+        <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider hidden sm:table-cell">
+          {t('calculator.time')}
+        </th>
+        <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider hidden md:table-cell">
+          {t('calculator.guarantee')}
+        </th>
+        <th scope="col" class="px-6 py-4 text-right text-xs font-semibold text-text-secondary uppercase tracking-wider">
+          {t('calculator.price')}
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-white/10 bg-graphite-surface">
+      {activeRepairs.map((repair) => (
+        <tr class="hover:bg-graphite-hover transition-colors">
+          <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-text-primary">
+            {repair.label}
+            <div class="sm:hidden text-xs text-text-muted mt-0.5">⏱ {repair.time}</div>
+          </td>
+          <td class="whitespace-nowrap px-6 py-4 text-sm text-text-secondary hidden sm:table-cell">
+            {repair.time}
+          </td>
+          <td class="whitespace-nowrap px-6 py-4 text-sm text-text-secondary hidden md:table-cell">
+            {repair.guarantee}
+          </td>
+          <td class="whitespace-nowrap px-6 py-4 text-right text-base font-bold text-text-primary tabular-nums">
+            €{repair.price}
+          </td>
+        </tr>
+      ))}
+      {activeRepairs.length === 0 && (
+        <tr>
+          <td colspan="4" class="px-6 py-8 text-center text-text-muted text-sm">
+            {t('calculator.no_price')}
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>

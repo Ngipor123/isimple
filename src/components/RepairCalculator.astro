@@ -1,0 +1,197 @@
+---
+import PhoneCard from './PhoneCard.astro';
+import PriceTable from './PriceTable.astro';
+import { useTranslations, getLocalizedPath } from '../lib/i18n';
+
+interface Props {
+  models: Array<{
+    name: string;
+    slug: string;
+    prices: any;
+  }>;
+  lang: string;
+}
+
+const { models, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const defaultModel = models[0] || { name: '', slug: '', prices: {} };
+---
+
+<div class="space-y-6" id="repair-calculator-container">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Models list — горизонтальный скролл на мобильном, вертикальный на десктоп -->
+    <div class="md:col-span-1">
+      <h3 class="section-label mb-3">{t('calculator.select_model')}</h3>
+      <!-- Mobile: горизонтальный скролл с snap -->
+      <div class="flex md:hidden gap-2 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-none -mx-4 px-4">
+        {models.map((model, index) => (
+          <div class="flex-shrink-0 snap-start">
+            <PhoneCard name={model.name} slug={model.slug} isActive={index === 0} />
+          </div>
+        ))}
+      </div>
+      <!-- Desktop: vertical list scrolling -->
+      <div class="hidden md:flex flex-col gap-2 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+        {models.map((model, index) => (
+          <PhoneCard name={model.name} slug={model.slug} isActive={index === 0} />
+        ))}
+      </div>
+    </div>
+
+    <!-- Price panel -->
+    <div class="md:col-span-2 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-white/10">
+        <div>
+          <h2 id="active-model-title" class="text-xl font-bold text-text-primary">{defaultModel.name}</h2>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <a
+            id="active-model-link"
+            href={getLocalizedPath(`/apple-serviss/iphone-remonts/${defaultModel.slug}/`, lang)}
+            class="btn-secondary py-4 px-6 text-base font-extrabold w-full sm:w-auto text-center flex-1 sm:flex-none"
+          >
+            Apskatīt visas šī modeļa cenas
+          </a>
+          <a
+            href={getLocalizedPath('/kontakti/', lang)}
+            class="btn-orange py-4 px-6 text-base font-extrabold w-full sm:w-auto text-center flex-1 sm:flex-none"
+          >
+            Pieteikt bezmaksas diagnostiku
+          </a>
+        </div>
+      </div>
+
+      <div id="price-table-wrapper">
+        <PriceTable prices={defaultModel.prices} lang={lang} slug={defaultModel.slug} />
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Raw model data payload for the client side interactions -->
+<script is:inline define:vars={{ models, lang, translations: {
+  service_type: t('calculator.service_type'),
+  time: t('calculator.time'),
+  guarantee: t('calculator.guarantee'),
+  price: t('calculator.price'),
+  more_details: t('calculator.more_details'),
+  contact_us: t('calculator.contact_us'),
+  screen_orig: t('calculator.types.screen_orig'),
+  screen_copy: t('calculator.types.screen_copy'),
+  battery: t('calculator.types.battery'),
+  camera: t('calculator.types.camera'),
+  body: t('calculator.types.body'),
+  home_button: t('calculator.types.home_button'),
+  charging_port: t('calculator.types.charging_port'),
+  guarantee_6m: t('calculator.guarantee_6m'),
+  guarantee_3m: t('calculator.guarantee_3m'),
+  no_price: t('calculator.no_price')
+} }}>
+  // Client-side interactions
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.iphone-card-btn');
+    const titleEl = document.getElementById('active-model-title');
+    const linkEl = document.getElementById('active-model-link');
+    const wrapper = document.getElementById('price-table-wrapper');
+
+    const localizedPrefix = lang === 'lv' ? '' : `/${lang}`;
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        // Remove active class styling from all cards
+        cards.forEach((c) => {
+          c.classList.remove('border-brand-orange', 'bg-brand-orange/10', 'text-brand-orange', 'ring-1', 'ring-inset', 'ring-brand-orange');
+          c.classList.add('border-white/10', 'bg-graphite-surface', 'text-text-secondary');
+          c.setAttribute('aria-pressed', 'false');
+        });
+
+        // Add active classes to selected card
+        card.classList.add('border-brand-orange', 'bg-brand-orange/10', 'text-brand-orange', 'ring-1', 'ring-inset', 'ring-brand-orange');
+        card.classList.remove('border-white/10', 'bg-graphite-surface', 'text-text-secondary');
+        card.setAttribute('aria-pressed', 'true');
+
+        const slug = card.getAttribute('data-slug');
+        const model = models.find((m) => m.slug === slug);
+
+        if (model && titleEl && linkEl && wrapper) {
+          // Update heading
+          titleEl.textContent = model.name;
+          // Update URL
+          linkEl.setAttribute('href', `${localizedPrefix}/apple-serviss/iphone-remonts/${model.slug}/`);
+
+          // Render new table
+          const prices = model.prices || {};
+          const repairTypes = [
+            { key: 'screen_orig', label: translations.screen_orig, time: '40-60 min', guarantee: translations.guarantee_6m },
+            { key: 'screen_copy', label: translations.screen_copy, time: '40-60 min', guarantee: translations.guarantee_3m },
+            { key: 'battery', label: translations.battery, time: '30-40 min', guarantee: translations.guarantee_6m },
+            { key: 'camera', label: translations.camera, time: '40-60 min', guarantee: translations.guarantee_6m },
+            { key: 'body', label: translations.body, time: '2-4 h', guarantee: translations.guarantee_6m },
+            { key: 'home_button', label: translations.home_button, time: '30 min', guarantee: translations.guarantee_3m },
+            { key: 'charging_port', label: translations.charging_port, time: '40-60 min', guarantee: translations.guarantee_6m },
+          ];
+
+          const active = repairTypes.map(r => ({ ...r, price: prices[r.key] })).filter(r => r.price !== null && r.price !== undefined);
+
+          let tbodyHtml = '';
+          if (active.length === 0) {
+            tbodyHtml = `
+              <tr>
+                <td colspan="4" class="px-6 py-8 text-center text-text-muted text-sm">
+                  ${translations.no_price}
+                </td>
+              </tr>
+            `;
+          } else {
+            tbodyHtml = active.map(r => `
+              <tr class="hover:bg-graphite-hover transition-colors">
+                <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-text-primary">
+                  ${r.label}
+                  <div class="sm:hidden text-xs text-text-muted mt-0.5">⏱ ${r.time}</div>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-text-secondary hidden sm:table-cell">
+                  ${r.time}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-sm text-text-secondary hidden md:table-cell">
+                  ${r.guarantee}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 text-right text-base font-bold text-text-primary tabular-nums">
+                  €${r.price}
+                </td>
+              </tr>
+            `).join('');
+          }
+
+          wrapper.innerHTML = `
+            <div class="overflow-x-auto rounded-xl border border-white/10">
+              <table class="min-w-full divide-y divide-white/10">
+                <thead class="bg-graphite-alt border-b border-white/10">
+                  <tr>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                      ${translations.service_type}
+                    </th>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider hidden sm:table-cell">
+                      ${translations.time}
+                    </th>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider hidden md:table-cell">
+                      ${translations.guarantee}
+                    </th>
+                    <th scope="col" class="px-6 py-4 text-right text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                      ${translations.price}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10 bg-graphite-surface">
+                  ${tbodyHtml}
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
+      });
+    });
+  });
+</script>

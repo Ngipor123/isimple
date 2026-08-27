@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import { useTranslations, getLocalizedPath } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const titles: Record<string, string> = {
+  lv: 'Kontakti — iSimple.lv',
+  ru: 'Контакты — iSimple.lv',
+  en: 'Contacts — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'Sazinieties ar iSimple.lv servisa centru Rīgā, Dreiliņos. Tālrunis: +371 22487593, Adrese: Biķeru iela 4. Piesaki remontu jau šodien!',
+  ru: 'Свяжитесь с сервисным центром iSimple.lv в Риге, Дрейлини. Телефон: +371 22487593, Адрес: Biķeru iela 4. Запишитесь на ремонт сегодня!',
+  en: 'Contact iSimple.lv service centre in Riga, Dreilini. Phone: +371 22487593, Address: Biķeru iela 4. Book a repair today!',
+};
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'Контакты' : lang === 'en' ? 'Contacts' : 'Kontakti', "item": `${siteUrl}${getLocalizedPath('/kontakti/', lang)}` }
+  ]
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Contact Details -->
+        <div class="lg:col-span-6 space-y-6">
+          <img
+            src="/images/Apple-Self-Service-Repair-iPhone.jpg"
+            alt={lang === 'ru' ? 'Рабочее место мастера iSimple' : lang === 'en' ? 'iSimple technician workstation' : 'iSimple meistara darbavieta'}
+            class="w-full aspect-[16/9] object-cover rounded-lg border border-white/10 shadow-sm"
+            loading="lazy"
+          />
+          <div class="card p-6 md:p-8 space-y-8">
+          <div>
+            <h1 class="text-4xl font-extrabold text-text-primary tracking-tight">
+              {lang === 'ru' ? 'Свяжитесь с нами' : lang === 'en' ? 'Contact Us' : 'Sazinieties ar mums'}
+            </h1>
+            
+            <!-- Live open/closed indicator (JS-powered) -->
+            <div id="branch-status" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border border-white/10 text-text-secondary mt-3">
+              <span id="status-dot" class="w-2 h-2 rounded-full"></span>
+              <span id="status-text"></span>
+            </div>
+
+            <p class="mt-4 text-text-secondary">
+              {lang === 'ru'
+                ? 'Задайте вопрос, запишитесь на ремонт или узнайте статус ремонта. Мы рады помочь!'
+                : lang === 'en'
+                ? 'Ask a question, book a repair, or check your repair status. We are happy to help!'
+                : 'Uzdodiet jautājumu, pieteikiet remontu vai uzziniet remonta statusu. Mēs labprāt Jums palīdzēsim!'}
+            </p>
+          </div>
+
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 text-brand-orange mt-1">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-text-primary">{t('contacts_info.address_label')}</h3>
+                <p class="text-text-secondary text-sm mt-0.5">{t('contacts_info.address_value')}</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 text-brand-orange mt-1">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-text-primary">{t('contacts_info.phone_label')}</h3>
+                <p class="text-text-secondary text-sm mt-0.5">
+                  <a href="tel:+37122487593" class="hover:text-brand-orange transition-colors font-semibold text-text-secondary">+371 22 487 593</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 text-brand-orange mt-1">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8m-2 11H4a2 2 0 01-2-2V8a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-text-primary">{t('contacts_info.email_label')}</h3>
+                <p class="text-text-secondary text-sm mt-0.5">
+                  <a href="mailto:info@isimple.lv" class="hover:text-brand-orange transition-colors font-semibold text-text-secondary">info@isimple.lv</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 text-brand-orange mt-1">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-text-primary">{t('contacts_info.working_hours_label')}</h3>
+                <p class="text-text-secondary text-sm mt-0.5">{t('contacts_info.working_hours_value')}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation buttons -->
+          <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
+            <a
+              href="https://waze.com/ul?q=T%2FC%20S%C4%81ga%20Bi%C4%B7eru%20iela%204&navigate=yes"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#00CCFF] hover:bg-[#00b8e6] text-white font-semibold rounded-lg text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00CCFF] focus-visible:ring-offset-2 focus-visible:ring-offset-graphite-bg"
+            >
+              <!-- Waze icon -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.54 6.63C19.08 3.14 15.67 0.75 11.75 0.75 6.78 0.75 2.69 4.48 2.75 9.5c0 1.56.43 3.05 1.19 4.33L2.25 18l4.59-1.41A9.01 9.01 0 0 0 11.75 18c5.1 0 9.25-4.15 9.25-9.25 0-.71-.08-1.42-.23-2.09l-.23-.03zM11.75 16c-1.24 0-2.44-.35-3.47-.99l-2.44.75.77-2.36a6.5 6.5 0 0 1-1.11-3.65C5.5 6.42 8.33 3.5 11.75 3.5c3.42 0 6.25 2.79 6.25 6.25S15.17 16 11.75 16zM15 10.5h-2.5V8a.75.75 0 0 0-1.5 0v3.25c0 .41.34.75.75.75H15a.75.75 0 0 0 0-1.5z"/>
+              </svg>
+              {t('branch.waze')}
+            </a>
+            <a
+              href="https://maps.google.com/?q=Biķeru+iela+4,+Dreiliņi"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-transparent border border-white/20 hover:bg-white/5 text-text-primary font-semibold rounded-lg text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-graphite-bg"
+            >
+              <!-- Google Maps pin icon -->
+              <svg class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              {t('branch.google_maps')}
+            </a>
+          </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-6">
+          <ContactForm lang={lang} />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Live open/closed status for T/C Sāga (Riga time)
+  (function () {
+    const dot = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+    const wrapper = document.getElementById('branch-status');
+    if (!dot || !text || !wrapper) return;
+
+    let weekday, hours, minutes;
+    try {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Riga',
+        weekday: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }).formatToParts(new Date());
+      const get = (type) => (parts.find((p) => p.type === type) || {}).value;
+      weekday = get('weekday');
+      hours = parseInt(get('hour'), 10);
+      minutes = parseInt(get('minute'), 10);
+    } catch (e) {
+      return;
+    }
+    if (isNaN(hours) || isNaN(minutes)) return;
+    if (hours === 24) hours = 0;
+
+    const closesAt = weekday === 'Sun' ? 20 : 21;
+    const totalMinutes = hours * 60 + minutes;
+    const isOpen = totalMinutes >= 10 * 60 && totalMinutes < closesAt * 60;
+
+    if (isOpen) {
+      dot.classList.add('bg-green-500');
+      wrapper.classList.add('bg-green-950/20', 'border-green-900/50', 'text-green-400');
+      text.textContent = `Atvērts šodien · Slēdzas plkst. ${closesAt}:00`;
+    } else {
+      dot.classList.add('bg-red-500');
+      wrapper.classList.add('bg-red-950/20', 'border-red-900/50', 'text-red-400');
+      text.textContent = `Slēgts · Atveras plkst. 10:00`;
+    }
+  })();
+</script>

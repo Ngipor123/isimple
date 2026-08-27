@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import { useTranslations, getLocalizedPath } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const titles: Record<string, string> = {
+  lv: 'Dyson ierīču remonts Rīgā — iSimple.lv',
+  ru: 'Ремонт устройств Dyson в Риге — iSimple.lv',
+  en: 'Dyson Device Repair in Riga — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'Profesionāls Dyson fēnu, Airwrap staileru un bezvadu putekļsūcēju remonts Dreiliņos, Rīgā. Diagnostika bez maksas, garantija visiem darbiem.',
+  ru: 'Профессиональный ремонт фенов Dyson, стайлеров Airwrap и беспроводных пылесосов в Дрейлини, Рига. Бесплатная диагностика, гарантия на все работы.',
+  en: 'Professional Dyson hair dryer, Airwrap styler and cordless vacuum repair in Dreilini, Riga. Free diagnostics, warranty on all work.',
+};
+
+const h1: Record<string, string> = {
+  lv: 'Dyson ierīču remonts Rīgā',
+  ru: 'Ремонт устройств Dyson в Риге',
+  en: 'Dyson Device Repair in Riga',
+};
+
+const heroDesc: Record<string, string> = {
+  lv: 'Remontējam Dyson fēnus, Airwrap stailerus un bezvadu putekļsūcējus ar garantiju. Bezmaksas diagnostika, ātra apkalpošana.',
+  ru: 'Ремонтируем фены, стайлеры Airwrap и беспроводные пылесосы Dyson с гарантией. Бесплатная диагностика, быстрое обслуживание.',
+  en: 'We repair Dyson hair dryers, Airwrap stylers and cordless vacuums with warranty. Free diagnostics, fast service.',
+};
+
+const pricesHeading: Record<string, string> = {
+  lv: 'Dyson remonta cenas',
+  ru: 'Цены на ремонт Dyson',
+  en: 'Dyson Repair Prices',
+};
+
+const colService: Record<string, string> = {
+  lv: 'Pakalpojums',
+  ru: 'Услуга',
+  en: 'Service',
+};
+
+const colPrice: Record<string, string> = {
+  lv: 'Cena (sākot no)',
+  ru: 'Цена (от)',
+  en: 'Price (from)',
+};
+
+const priceNote: Record<string, string> = {
+  lv: '* Precīzu cenu noteiks pēc bezmaksas diagnostikas. Cenas var atšķirties atkarībā no ierīces modeļa un bojājuma veida.',
+  ru: '* Точная цена определяется после бесплатной диагностики. Цены могут отличаться в зависимости от модели устройства и вида повреждения.',
+  en: '* Exact price is determined after free diagnostics. Prices may vary depending on device model and type of damage.',
+};
+
+interface RepairService {
+  lv: string;
+  ru: string;
+  en: string;
+  price: string;
+}
+
+const services: RepairService[] = [
+  { lv: 'Diagnostika', ru: 'Диагностика', en: 'Diagnostics', price: 'Bezmaksas / 0 €' },
+  { lv: 'Barošanas kabeļa maiņa', ru: 'Замена кабеля питания', en: 'Power cable replacement', price: 'no 35 €' },
+  { lv: 'Dzinēja maiņa', ru: 'Замена мотора', en: 'Motor replacement', price: 'no 60 €' },
+  { lv: 'Vadības plates remonts', ru: 'Ремонт платы управления', en: 'Control board repair', price: 'no 50 €' },
+  { lv: 'Filtru tīrīšana / maiņa', ru: 'Чистка / замена фильтров', en: 'Filter cleaning / replacement', price: 'no 25 €' },
+  { lv: 'Akumulatora maiņa', ru: 'Замена аккумулятора', en: 'Battery replacement', price: 'no 45 €' },
+];
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'Ремонт Dyson' : lang === 'en' ? 'Dyson Repair' : 'Dyson remonts', "item": `${siteUrl}${getLocalizedPath('/dyson-remonts/', lang)}` }
+  ]
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+        <!-- Content -->
+        <div class="lg:col-span-8 space-y-8">
+          <div class="bg-graphite-surface p-8 rounded-2xl border border-white/10 card-shadow space-y-6">
+            <span class="text-xs text-brand-orange font-bold uppercase tracking-wider block">Dyson</span>
+            <h1 class="text-4xl font-extrabold text-text-primary tracking-tight">
+              {h1[lang] || h1.lv}
+            </h1>
+            <p class="text-text-secondary leading-relaxed">
+              {heroDesc[lang] || heroDesc.lv}
+            </p>
+
+            <img
+              src="/images/dyson/dyson-hair-dryer.webp"
+              alt={lang === 'ru' ? 'Мастер ремонтирует фен Dyson' : lang === 'en' ? 'Technician repairing a Dyson hair dryer' : 'Meistars labo Dyson fēnu'}
+              class="w-full aspect-[16/9] object-cover rounded-xl border border-white/10 shadow-sm"
+              loading="eager"
+            />
+
+            <h2 class="text-2xl font-bold text-text-primary pt-4">
+              {pricesHeading[lang] || pricesHeading.lv}
+            </h2>
+            <div class="overflow-x-auto rounded-xl border border-white/10">
+              <table class="min-w-full divide-y divide-white/10 text-sm">
+                <thead class="bg-graphite-alt">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-left font-semibold text-text-secondary uppercase tracking-wider">
+                      {colService[lang] || colService.lv}
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right font-semibold text-text-secondary uppercase tracking-wider">
+                      {colPrice[lang] || colPrice.lv}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10 bg-graphite-surface">
+                  {services.map((service) => (
+                    <tr>
+                      <td class="px-6 py-4 font-medium text-text-primary">
+                        {service[lang as 'lv' | 'ru' | 'en'] || service.lv}
+                      </td>
+                      <td class="px-6 py-4 text-right font-bold text-brand-orange">
+                        {service.price}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-xs text-text-muted italic">
+              {priceNote[lang] || priceNote.lv}
+            </p>
+          </div>
+        </div>
+
+        <!-- Form Sidebar -->
+        <div class="lg:col-span-4">
+          <ContactForm lang={lang} />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

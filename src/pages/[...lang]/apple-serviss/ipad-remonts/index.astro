@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import ContactForm from '../../../../components/ContactForm.astro';
+import { useTranslations, getLocalizedPath } from '../../../../lib/i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const titles: Record<string, string> = {
+  lv: 'iPad remonts Rīgā — iSimple.lv',
+  ru: 'Ремонт iPad в Риге — iSimple.lv',
+  en: 'iPad Repair in Riga — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'Profesionāls iPad remonts Dreiliņos, Rīgā. Stikla maiņa, displeja moduļa nomaiņa, lādēšanas ligzdas remonts un bateriju nomaiņa visiem iPad modeļiem.',
+  ru: 'Профессиональный ремонт iPad в Дрейлини, Рига. Замена стекла, дисплейного модуля, разъема зарядки и батарей для всех моделей iPad.',
+  en: 'Professional iPad repair in Dreilini, Riga. Glass replacement, display module, charging port, and battery for all iPad models.',
+};
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'Ремонт iPad' : lang === 'en' ? 'iPad Repair' : 'iPad remonts', "item": `${siteUrl}${getLocalizedPath('/apple-serviss/ipad-remonts/', lang)}` }
+  ]
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Content -->
+        <div class="lg:col-span-8 space-y-8">
+          <div class="bg-graphite-surface p-8 rounded-2xl border border-white/10 card-shadow space-y-6">
+            <span class="text-xs text-brand-orange font-bold uppercase tracking-wider block">Apple iPad</span>
+            <h1 class="text-4xl font-extrabold text-text-primary tracking-tight">
+              {lang === 'ru' ? 'Ремонт iPad' : lang === 'en' ? 'iPad Repair' : 'iPad remonts'}
+            </h1>
+            <p class="text-text-secondary leading-relaxed">
+              {lang === 'ru'
+                ? 'В нашем сервисном центре iSimple мы выполняем ремонт планшетов iPad любой сложности. Независимо от того, какой у вас iPad, мы поможем вернуть устройство в рабочее состояние.'
+                : lang === 'en'
+                ? 'At our iSimple service centre, we repair all iPad tablets of any complexity. Regardless of which iPad you have, we will help restore your device.'
+                : 'Mūsu servisa centrā iSimple veicam jebkuras sarežģītības iPad planšetdatoru remontu. Neatkarīgi no tā, vai Jums ir klasiskais iPad, iPad Air, iPad mini vai jaudīgais iPad Pro, mēs palīdzēsim atgriezt Jūsu ierīci darba kārtībā.'}
+            </p>
+
+            <img
+              src="/images/ipad/ipad-desk-front.webp"
+              alt={lang === 'ru' ? 'iPad на столе в сервисном центре' : lang === 'en' ? 'iPad on a desk in the service centre' : 'iPad uz galda servisa centrā'}
+              class="w-full aspect-[16/9] object-cover rounded-xl border border-white/10 shadow-sm"
+              loading="eager"
+            />
+
+            <h2 class="text-2xl font-bold text-text-primary pt-4">
+              {lang === 'ru' ? 'Частые виды ремонта и цены' : lang === 'en' ? 'Common repairs and prices' : 'Biežākie iPad remonta veidi un cenas'}
+            </h2>
+            <div class="overflow-x-auto rounded-xl border border-white/10">
+              <table class="min-w-full divide-y divide-white/10 text-sm">
+                <thead class="bg-graphite-alt">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-left font-semibold text-text-secondary uppercase tracking-wider">
+                      {lang === 'ru' ? 'Услуга' : lang === 'en' ? 'Service' : 'Pakalpojums'}
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left font-semibold text-text-secondary uppercase tracking-wider">
+                      {lang === 'ru' ? 'Время' : lang === 'en' ? 'Time' : 'Laiks'}
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right font-semibold text-text-secondary uppercase tracking-wider">
+                      {lang === 'ru' ? 'Цена (от)' : lang === 'en' ? 'Price (from)' : 'Cena (sākot no)'}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10 bg-graphite-surface">
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-text-primary">
+                      {lang === 'ru' ? 'Замена стекла / сенсора (iPad 7/8/9/10)' : lang === 'en' ? 'Glass / touchscreen replacement (iPad 7/8/9/10)' : 'Stikla / Skārienjūtīgā ekrāna maiņa (iPad 7/8/9/10)'}
+                    </td>
+                    <td class="px-6 py-4 text-text-secondary">1-2 {lang === 'ru' ? 'раб. дня' : lang === 'en' ? 'work days' : 'darba dienas'}</td>
+                    <td class="px-6 py-4 text-right font-bold text-brand-orange">no €60</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-text-primary">
+                      {lang === 'ru' ? 'Замена дисплея (iPad Air, Pro, mini)' : lang === 'en' ? 'Display replacement (iPad Air, Pro, mini)' : 'Displeja moduļa maiņa (iPad Air, Pro, mini)'}
+                    </td>
+                    <td class="px-6 py-4 text-text-secondary">1-2 {lang === 'ru' ? 'раб. дня' : lang === 'en' ? 'work days' : 'darba dienas'}</td>
+                    <td class="px-6 py-4 text-right font-bold text-brand-orange">no €110</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-text-primary">
+                      {lang === 'ru' ? 'Замена аккумулятора' : lang === 'en' ? 'Battery replacement' : 'Akumulatora (Baterijas) nomaiņa'}
+                    </td>
+                    <td class="px-6 py-4 text-text-secondary">1-2 {lang === 'ru' ? 'раб. дня' : lang === 'en' ? 'work days' : 'darba dienas'}</td>
+                    <td class="px-6 py-4 text-right font-bold text-brand-orange">no €50</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-text-primary">
+                      {lang === 'ru' ? 'Ремонт разъема зарядки / аудио' : lang === 'en' ? 'Charging / audio port repair' : 'Lādēšanas ligzdas / audio ligzdas remonts'}
+                    </td>
+                    <td class="px-6 py-4 text-text-secondary">1 {lang === 'ru' ? 'раб. день' : lang === 'en' ? 'work day' : 'darba diena'}</td>
+                    <td class="px-6 py-4 text-right font-bold text-brand-orange">no €45</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-text-primary">
+                      {lang === 'ru' ? 'Ремонт материнской платы' : lang === 'en' ? 'Motherboard repair' : 'Mātesplates remonts, lodēšanas darbi'}
+                    </td>
+                    <td class="px-6 py-4 text-text-secondary">2-5 {lang === 'ru' ? 'раб. дней' : lang === 'en' ? 'work days' : 'darba dienas'}</td>
+                    <td class="px-6 py-4 text-right font-bold text-brand-orange">no €70</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-xs text-text-muted italic">
+              {lang === 'ru'
+                ? '* Цены могут отличаться в зависимости от поколения и модели iPad. Точную цену определим после бесплатной диагностики.'
+                : lang === 'en'
+                ? '* Prices may vary depending on iPad generation and model. We will determine the exact price after a free diagnosis.'
+                : '* Cenas var atšķirties atkarībā no iPad paaudzes un modeļa. Precīzu cenu noteiksim pēc bezmaksas diagnostikas mūsu servisā.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Form Sidebar -->
+        <div class="lg:col-span-4">
+          <ContactForm lang={lang} />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

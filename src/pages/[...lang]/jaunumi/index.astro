@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getPosts } from '../../../lib/sanity';
+import { useTranslations, getLocalizedPath } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const posts = await getPosts();
+
+const titles: Record<string, string> = {
+  lv: 'Jaunumi un Padomi — iSimple.lv',
+  ru: 'Новости и советы — iSimple.lv',
+  en: 'News and Tips — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'Lasi jaunākās ziņas, noderīgus padomus par viedtālruņu, planšetdatoru un datoru apkopi un labošanu mūsu emuārā.',
+  ru: 'Читайте последние новости и полезные советы по обслуживанию и ремонту смартфонов, планшетов и компьютеров.',
+  en: 'Read the latest news and useful tips about smartphone, tablet and computer maintenance and repair.',
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h1 class="text-4xl font-extrabold text-text-primary tracking-tight sm:text-5xl">
+          {lang === 'ru' ? 'Новости и статьи' : lang === 'en' ? 'News and Articles' : 'Jaunumi un raksti'}
+        </h1>
+        <p class="mt-4 text-lg text-text-secondary">
+          {lang === 'ru'
+            ? 'Полезная информация об использовании и обслуживании устройств.'
+            : lang === 'en'
+            ? 'Useful information about device usage and maintenance.'
+            : 'Noderīga informācija par ierīču lietošanu un apkopi.'}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {posts.map((post) => (
+          <a
+            href={getLocalizedPath(`/jaunumi/${post.slug}/`, lang)}
+            class="bg-graphite-surface border border-white/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-white/20 transition-[box-shadow,border-color] duration-150 flex flex-col justify-between group"
+          >
+            <img
+              src={post.image || '/images/og-image.jpg'}
+              alt={post.title[lang as 'lv' | 'ru' | 'en'] || post.title.lv}
+              class="w-full h-48 object-cover rounded-t-xl border-b border-white/10"
+              loading="lazy"
+            />
+            <div class="p-6 space-y-4">
+              <span class="text-xs text-text-muted font-semibold">{post.date}</span>
+              <h2 class="text-xl font-bold text-text-primary group-hover:text-brand-orange transition-colors">
+                {post.title[lang as 'lv' | 'ru' | 'en'] || post.title.lv}
+              </h2>
+              <p class="text-text-secondary text-sm leading-relaxed">
+                {post.excerpt[lang as 'lv' | 'ru' | 'en'] || post.excerpt.lv}
+              </p>
+            </div>
+            <div class="px-6 pb-6 pt-4 border-t border-white/10">
+              <span class="text-sm font-bold text-brand-orange group-hover:underline">
+                {lang === 'ru' ? 'Читать далее →' : lang === 'en' ? 'Read more →' : 'Lasīt vairāk →'}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

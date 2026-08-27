@@ -1,0 +1,116 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  lang: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const { title, description, canonicalUrl, ogImage, ogType } = Astro.props;
+const siteUrl = 'https://isimple.lv';
+
+// Strip any language prefix, normalize trailing slash
+let rawPath = Astro.url.pathname.replace(/^\/(ru|en)(\/|$)/, '/');
+if (!rawPath.endsWith('/')) rawPath += '/';
+const cleanPath = rawPath.replace(/\/+/g, '/');
+
+const lvUrl = `${siteUrl}${cleanPath}`;
+const actualCanonical = canonicalUrl || lvUrl;
+
+// Raster OG image: SVG is not rendered by Facebook, WhatsApp, Telegram or LinkedIn
+const socialImage = `${siteUrl}${ogImage || '/images/og-image.jpg'}`;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="canonical" href={actualCanonical} />
+<link rel="alternate" hreflang="lv" href={lvUrl} />
+<link rel="alternate" hreflang="x-default" href={lvUrl} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType || 'website'} />
+<meta property="og:site_name" content="iSimple.lv" />
+<meta property="og:locale" content="lv_LV" />
+<meta property="og:url" content={actualCanonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="iSimple.lv" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={actualCanonical} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImage} />
+
+<!-- Font preloads or fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+<!-- Structured Data LocalBusiness -->
+<script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "iSimple.lv",
+    "image": "https://isimple.lv/images/og-image.jpg",
+    "@id": "https://isimple.lv/#localbusiness",
+    "url": "https://isimple.lv",
+    "telephone": "+37122487593",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Biķeru iela 4",
+      "addressLocality": "Dreiliņi, Stopiņu pagasts",
+      "addressRegion": "Ropažu novads",
+      "postalCode": "LV-2130",
+      "addressCountry": "LV"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 56.9535,
+      "longitude": 24.2372
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "10:00",
+        "closes": "21:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Sunday",
+        "opens": "10:00",
+        "closes": "20:00"
+      }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/isimple.lv"
+    ]
+  }
+</script>

@@ -1,0 +1,23 @@
+---
+interface Props {
+  name: string;
+  slug: string;
+  isActive?: boolean;
+}
+
+const { name, slug, isActive = false } = Astro.props;
+---
+
+<button
+  type="button"
+  data-slug={slug}
+  aria-label={`Izvēlēties modeli: ${name}`}
+  aria-pressed={isActive ? 'true' : 'false'}
+  class={`iphone-card-btn w-full text-left px-4 py-3 rounded-lg border text-sm font-medium transition-[border-color,background-color] duration-150 [touch-action:manipulation] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-1 ${
+    isActive
+      ? 'border-brand-orange bg-brand-orange/10 text-brand-orange ring-1 ring-inset ring-brand-orange'
+      : 'border-white/10 bg-graphite-surface text-text-secondary hover:border-white/20 hover:text-text-primary'
+  }`}
+>
+  {name}
+</button>

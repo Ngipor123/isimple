@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PriceTable from '../../../../components/PriceTable.astro';
+import ContactForm from '../../../../components/ContactForm.astro';
+import { getIPhoneModels } from '../../../../lib/sanity';
+import { useTranslations, getLocalizedPath } from '../../../../lib/i18n';
+import { getIPhoneImageUrl } from '../../../../lib/iphone-images';
+
+export async function getStaticPaths() {
+  const models = await getIPhoneModels();
+  const paths: any[] = [];
+
+  models.forEach((model) => {
+    paths.push({
+      params: { lang: undefined, model: model.slug },
+      props: { model, lang: 'lv' }
+    });
+  });
+
+  return paths;
+}
+
+const { model, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const title = model.seoTitle?.[lang] || model.seoTitle?.lv || `${model.name} remonts Rīgā - iSimple.lv`;
+const description = model.seoDescription?.[lang] || model.seoDescription?.lv || `${model.name} remonts Dreiliņos. Ātrs ekrāna, akumulatora un citu detaļu remonts ar garantiju.`;
+
+
+const phoneImgUrl = getIPhoneImageUrl(model.slug);
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'Ремонт iPhone' : lang === 'en' ? 'iPhone Repair' : 'iPhone remonts', "item": `${siteUrl}${getLocalizedPath('/apple-serviss/iphone-remonts/', lang)}` },
+    { "@type": "ListItem", "position": 3, "name": model.name, "item": `${siteUrl}${getLocalizedPath(`/apple-serviss/iphone-remonts/${model.slug}/`, lang)}` }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Back button -->
+      <div class="mb-8">
+        <a
+          href={getLocalizedPath('/apple-serviss/iphone-remonts/', lang)}
+          class="inline-flex items-center space-x-2 text-sm font-semibold text-text-secondary hover:text-brand-orange transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>{t('nav.back')}</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Prices -->
+        <div class="lg:col-span-8 space-y-6">
+          <div class="card p-6 md:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+              
+              <!-- Left Column: iPhone transparent image -->
+              <div class="md:col-span-4 flex justify-center sticky top-24">
+                <img 
+                   src={phoneImgUrl} 
+                  alt={`${model.name}`} 
+                  class="w-full max-w-[200px] md:max-w-none h-auto object-contain drop-shadow-xl" 
+                  loading="eager"
+                />
+              </div>
+              
+              <!-- Right Column: Info & Price Table -->
+              <div class="md:col-span-8 space-y-6">
+                <div>
+                  <span class="section-label mb-2 block">Apple iPhone</span>
+                  <h1 class="text-3xl font-extrabold text-text-primary tracking-tight mb-3">
+                    {model.name} {lang === 'ru' ? 'ремонт в Риге' : lang === 'en' ? 'repair in Riga' : 'remonts Rīgā'}
+                  </h1>
+                  <p class="text-text-secondary text-sm leading-relaxed">
+                    {lang === 'ru' 
+                      ? 'Все работы по ремонту выполняются с использованием высококачественных деталей. Большинство ремонтов (замена экрана, аккумулятора) выполняем в течение часа с предоставлением официальной гарантии.' 
+                      : lang === 'en' 
+                      ? 'All repair works are carried out using high-quality parts. Most repairs (screen replacement, battery replacement) are done within an hour with an official warranty.' 
+                      : 'Visi remonta darbi tiek veikti, izmantojot augstas kvalitātes detaļas. Vairumu remontu (ekrāna maiņa, baterijas nomaiņa) veicam stundas laikā. Katram remontam tiek nodrošināta oficiāla garantija.'}
+                  </p>
+                </div>
+                
+                <PriceTable prices={model.prices} lang={lang} slug={model.slug} />
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Form Sidebar -->
+        <div class="lg:col-span-4 space-y-6">
+          <ContactForm lang={lang} />
+          
+          <div class="card p-6 space-y-4">
+            <h3 class="font-bold text-text-primary text-base">{t('model.why_us_title')}</h3>
+            <ul class="space-y-3 text-sm text-text-secondary">
+              <li class="flex items-start space-x-2.5">
+                <span class="text-green-500 mt-0.5">✓</span>
+                <span>{t('model.feature_parts')}</span>
+              </li>
+              <li class="flex items-start space-x-2.5">
+                <span class="text-green-500 mt-0.5">✓</span>
+                <span>{t('model.feature_warranty')}</span>
+              </li>
+              <li class="flex items-start space-x-2.5">
+                <span class="text-green-500 mt-0.5">✓</span>
+                <span>{t('model.feature_speed')}</span>
+              </li>
+              <li class="flex items-start space-x-2.5">
+                <span class="text-green-500 mt-0.5">✓</span>
+                <span>{t('model.feature_free_diag')}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getServices } from '../../../lib/sanity';
+import { useTranslations, getLocalizedPath } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const services = await getServices();
+
+const titles: Record<string, string> = {
+  lv: 'Visi pakalpojumi — iSimple.lv',
+  ru: 'Все услуги — iSimple.lv',
+  en: 'All Services — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'Pilns remonta pakalpojumu klāsts Rīgā, Dreiliņos. Labojam iPhone, iPad, Windows portatīvos datorus, MacBook un Dyson tehniku.',
+  ru: 'Полный список услуг по ремонту в Риге, Дрейлини. Ремонтируем iPhone, iPad, ноутбуки Windows, MacBook и технику Dyson.',
+  en: 'Full range of repair services in Riga, Dreilini. We repair iPhone, iPad, Windows laptops, MacBook and Dyson appliances.',
+};
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'Услуги' : lang === 'en' ? 'Services' : 'Pakalpojumi', "item": `${siteUrl}${getLocalizedPath('/pakalpojumi/', lang)}` }
+  ]
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+        <div class="text-center lg:text-left max-w-3xl">
+          <h1 class="text-4xl font-extrabold text-text-primary tracking-tight sm:text-5xl">
+            {lang === 'ru' ? 'Наши услуги' : lang === 'en' ? 'Our Services' : 'Mūsu Pakalpojumi'}
+          </h1>
+          <p class="mt-4 text-lg text-text-secondary">
+            {lang === 'ru'
+              ? 'Выполняем профессиональный и быстрый ремонт техники с гарантией.'
+              : lang === 'en'
+              ? 'We perform professional and fast device repair with warranty.'
+              : 'Veicam profesionālu un ātru tehnikas remontu ar garantiju.'}
+          </p>
+        </div>
+        <div class="hidden lg:grid grid-cols-2 gap-4 items-start">
+          <img
+            src="/images/iphone-remont-1.jpg"
+            alt={lang === 'ru' ? 'Ремонт iPhone в Риге' : lang === 'en' ? 'iPhone repair in Riga' : 'iPhone remonts Rīgā'}
+            class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3] border border-white/10"
+            loading="eager"
+          />
+          <img
+            src="/images/old-site/iStock-472354892-scaled.jpg.webp"
+            alt={lang === 'ru' ? 'Замена экрана iPhone' : lang === 'en' ? 'iPhone screen replacement' : 'iPhone ekrāna nomaiņa'}
+            class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3] mt-10 border border-white/10"
+            loading="eager"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {services.map((service) => {
+          const bgImage =
+            service.icon === 'phone' ? '/images/service-iphone.png' :
+            service.icon === 'tablet' ? '/images/service-ipad.png' :
+            service.icon === 'laptop' ? '/images/service-laptop.png' :
+            '/images/service-dyson.png';
+          return (
+          <div
+            class="rounded-2xl border border-white/10 card-shadow flex flex-col justify-between overflow-hidden relative min-h-[260px]"
+            style={`background-image: url('${bgImage}'); background-size: cover; background-position: center;`}
+          >
+            <div class="absolute inset-0 bg-brand-dark/60"></div>
+            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+              <div class="space-y-4">
+                <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                  {service.icon === 'phone' && (
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  )}
+                  {service.icon === 'tablet' && (
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  )}
+                  {service.icon === 'laptop' && (
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  )}
+                  {service.icon !== 'phone' && service.icon !== 'tablet' && service.icon !== 'laptop' && (
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  )}
+                </div>
+                <h3 class="text-2xl font-bold text-white">{service.title[lang as 'lv' | 'ru' | 'en'] || service.title.lv}</h3>
+                <p class="text-white/70 leading-relaxed">{service.description[lang as 'lv' | 'ru' | 'en'] || service.description.lv}</p>
+              </div>
+              <div class="mt-8 pt-6 border-t border-white/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <span class="text-sm font-semibold text-white/70">
+                  {lang === 'ru' ? 'Гарантия до 6 месяцев' : lang === 'en' ? 'Warranty up to 6 months' : 'Garantija līdz 6 mēnešiem'}
+                </span>
+                <a
+                  href={getLocalizedPath('/kontakti/', lang)}
+                  class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-bold rounded-lg text-white bg-brand-orange hover:bg-opacity-95 shadow-sm transition-all"
+                >
+                  {lang === 'ru' ? 'Записаться' : lang === 'en' ? 'Book Repair' : 'Pieteikt remontu'}
+                </a>
+              </div>
+            </div>
+          </div>
+          );
+        })}
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

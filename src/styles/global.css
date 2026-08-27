@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #1B1D1F;
+    @apply text-text-primary font-sans antialiased;
+  }
+}
+
+@layer components {
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-text-muted;
+  }
+
+  .display-heading {
+    @apply font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-text-primary;
+    text-wrap: balance;
+  }
+
+  .section-heading {
+    @apply font-display text-2xl sm:text-3xl font-bold tracking-tight text-text-primary;
+    text-wrap: balance;
+  }
+
+  /* Card — плоская плашка без тени */
+  .card {
+    @apply bg-graphite-surface border border-white/10 rounded-lg transition-all duration-200;
+  }
+
+  .card-hover:hover {
+    @apply border-white/20 bg-graphite-hover -translate-y-0.5;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 bg-slate-800 hover:bg-slate-700 text-text-primary font-semibold rounded-lg text-sm transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-graphite-bg;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 bg-transparent border border-white/20 hover:bg-white/5 text-text-primary font-semibold rounded-lg text-sm transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-graphite-bg;
+  }
+
+  /* Orange CTA — только для главного призыва */
+  .btn-orange {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 bg-brand-orange hover:bg-brand-orange-hover text-graphite-header font-extrabold rounded-lg text-sm transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-graphite-bg;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-graphite-bg border border-white/10 rounded-lg text-text-primary placeholder:text-text-muted focus:bg-graphite-surface focus:border-brand-orange focus:ring-1 focus:ring-brand-orange focus:outline-none transition-[border-color,box-shadow] duration-150;
+  }
+
+  /* Price display */
+  .price-display {
+    @apply text-lg font-bold text-text-primary tabular-nums;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Тонкий скроллбар для списка моделей */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; /* slate-300 */
+  border-radius: 2px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Card shadow — используется на внутренних страницах (было без описания) */
+.card-shadow {
+  box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+}
+
+.card-shadow-hover {
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.card-shadow-hover:hover {
+  box-shadow: 0 4px 12px -2px rgb(15 23 42 / 0.10);
+  border-color: #cbd5e1; /* slate-300 */
+}
+
+/* Скрытый скроллбар для горизонтальных каруселей на мобильных */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

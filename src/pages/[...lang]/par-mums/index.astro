@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { useTranslations, getLocalizedPath } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const titles: Record<string, string> = {
+  lv: 'Par Mums — iSimple.lv',
+  ru: 'О нас — iSimple.lv',
+  en: 'About Us — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'iSimple.lv ir profesionāls mobilo tālruņu un citu viedierīču remonta serviss Dreiliņos. Mūsu prioritāte ir kvalitāte un apmierināti klienti.',
+  ru: 'iSimple.lv — профессиональный сервис по ремонту мобильных телефонов и других смарт-устройств в Дрейлини. Наш приоритет — качество и довольные клиенты.',
+  en: 'iSimple.lv is a professional mobile phone and smart device repair service in Dreilini. Our priority is quality and satisfied customers.',
+};
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'О нас' : lang === 'en' ? 'About Us' : 'Par Mums', "item": `${siteUrl}${getLocalizedPath('/par-mums/', lang)}` }
+  ]
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="card p-6 md:p-8 space-y-6">
+        <h1 class="text-4xl font-extrabold text-text-primary tracking-tight">
+          {lang === 'ru' ? 'О нас' : lang === 'en' ? 'About Us' : 'Par Mums'}
+        </h1>
+        
+        <p class="text-text-secondary leading-relaxed">
+          {lang === 'ru'
+            ? (<><strong>iSimple.lv</strong> — профессиональный сервис по ремонту мобильных телефонов, планшетов, ноутбуков и бытовой техники Dyson. Наша компания основана в 2021 году, объединяя квалифицированных специалистов для предоставления высококачественных услуг в Риге и Дрейлини.</>)
+            : lang === 'en'
+            ? (<><strong>iSimple.lv</strong> is a professional repair service for mobile phones, tablets, laptops and Dyson appliances. Established in 2021, we bring together qualified specialists to provide top-quality services in Riga and Dreilini.</>)
+            : (<><strong>iSimple.lv</strong> ir profesionāls mobilo tālruņu, planšetdatoru, portatīvo datoru un Dyson sadzīves tehnikas remonta serviss. Mēs strādājam kopš 2021. gada, apvienojot kvalificētus speciālistus un nodrošinot augstākās kvalitātes pakalpojumus Rīgā un Dreiliņos.</>)}
+        </p>
+
+        <img
+          src="/images/Apple-Self-Service-Repair-iPhone.jpg"
+          alt={lang === 'ru' ? 'Профессиональный ремонт iPhone' : lang === 'en' ? 'Professional iPhone repair' : 'Profesionāls iPhone remonts'}
+          class="my-8 rounded-xl overflow-hidden border border-white/10 shadow-sm max-h-[380px] w-full object-cover"
+          loading="lazy"
+        />
+
+        <h2 class="text-2xl font-bold text-text-primary pt-4">
+          {lang === 'ru' ? 'Наши ценности' : lang === 'en' ? 'Our Values' : 'Mūsu vērtības'}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <h3 class="font-bold text-brand-orange">
+              {lang === 'ru' ? '✓ Скорость' : lang === 'en' ? '✓ Speed' : '✓ Ātrums'}
+            </h3>
+            <p class="text-sm text-text-secondary">
+              {lang === 'ru'
+                ? 'Мы понимаем, насколько важен для вас телефон. Поэтому 90% ремонтов (замена экрана, батареи) выполняем за один час.'
+                : lang === 'en'
+                ? 'We understand how important your phone is. That\'s why 90% of repairs (screen or battery replacement) are done within one hour.'
+                : 'Mēs saprotam, cik svarīgs Jums ir telefons. Tāpēc 90% remontu, piemēram, ekrāna vai baterijas maiņu, veicam stundas laikā.'}
+            </p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-bold text-brand-orange">
+              {lang === 'ru' ? '✓ Качество' : lang === 'en' ? '✓ Quality' : '✓ Kvalitāte'}
+            </h3>
+            <p class="text-sm text-text-secondary">
+              {lang === 'ru'
+                ? 'Используем только проверенные запчасти высшего класса для обеспечения отличного качества ремонта.'
+                : lang === 'en'
+                ? 'We use only verified, top-grade parts to ensure excellent repair quality.'
+                : 'Izmantojam tikai pārbaudītas un augstākās klases detaļas, nodrošinot izcilu remonta kvalitāti.'}
+            </p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-bold text-brand-orange">
+              {lang === 'ru' ? '✓ Гарантия' : lang === 'en' ? '✓ Warranty' : '✓ Garantija'}
+            </h3>
+            <p class="text-sm text-text-secondary">
+              {lang === 'ru'
+                ? 'Доверяем своей работе и деталям, поэтому даем гарантию на каждый ремонт сроком до 6 месяцев.'
+                : lang === 'en'
+                ? 'We trust our work and parts, so we provide a warranty of up to 6 months on every repair.'
+                : 'Uzticamies savam darbam un detaļām, tādēļ katram remontam nodrošinām garantiju līdz 6 mēnešiem.'}
+            </p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-bold text-brand-orange">
+              {lang === 'ru' ? '✓ Сервис' : lang === 'en' ? '✓ Customer Service' : '✓ Klientu serviss'}
+            </h3>
+            <p class="text-sm text-text-secondary">
+              {lang === 'ru'
+                ? 'Наш приоритет — довольные клиенты. Всегда даём чёткое и понятное объяснение выполняемых работ.'
+                : lang === 'en'
+                ? 'Our priority is satisfied customers. We always provide a clear explanation of the work to be done.'
+                : 'Mūsu prioritāte ir apmierināti klienti. Vienmēr sniedzam skaidru un saprotamu skaidrojumu par veicamajiem darbiem.'}
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <img
+            src="/images/old-site/isimple-telefonu-un-datoru-serviss-1.jpg.webp"
+            alt={lang === 'ru' ? 'Мастер iSimple за ремонтом телефона' : lang === 'en' ? 'iSimple technician repairing a phone' : 'iSimple meistars tālruņa remonta procesā'}
+            class="rounded-xl border border-white/10 shadow-sm w-full aspect-[4/3] object-cover"
+            loading="lazy"
+          />
+          <img
+            src="/images/repair-photo-1.png"
+            alt={lang === 'ru' ? 'Замена разбитого экрана iPhone' : lang === 'en' ? 'Cracked iPhone screen replacement' : 'Salauztā iPhone ekrāna nomaiņa'}
+            class="rounded-xl border border-white/10 shadow-sm w-full aspect-[4/3] object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <p class="text-text-secondary leading-relaxed pt-4">
+          {lang === 'ru'
+            ? 'Ждем вас в нашем уютном сервисе в Дрейлини. Мы всегда проведем бесплатную диагностику и предложим лучшее решение для вашего устройства!'
+            : lang === 'en'
+            ? 'We look forward to welcoming you at our cosy service centre in Dreilini. We always perform a free diagnosis and offer the best solution for your device!'
+            : 'Gaidīsim Jūs mūsu mājīgajā servisā Dreiliņos. Mēs vienmēr veiksim bezmaksas diagnostiku un piedāvāsim labāko risinājumu Jūsu ierīcei!'}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

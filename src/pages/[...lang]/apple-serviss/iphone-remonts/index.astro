@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getIPhoneModels } from '../../../../lib/sanity';
+import { useTranslations, getLocalizedPath } from '../../../../lib/i18n';
+import { getIPhoneImageUrl } from '../../../../lib/iphone-images';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: 'lv' } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const models = await getIPhoneModels();
+
+const titles: Record<string, string> = {
+  lv: 'iPhone remonts Rīgā — iSimple.lv',
+  ru: 'Ремонт iPhone в Риге — iSimple.lv',
+  en: 'iPhone Repair in Riga — iSimple.lv',
+};
+const descriptions: Record<string, string> = {
+  lv: 'Kvalitatīvs un ātrs iPhone remonts Dreiliņos. Ekrāna maiņa, baterijas maiņa un citi pakalpojumi visiem iPhone modeļiem ar garantiju.',
+  ru: 'Качественный и быстрый ремонт iPhone в Дрейлини. Замена экрана, батареи и другие услуги для всех моделей iPhone с гарантией.',
+  en: 'Quality and fast iPhone repair in Dreilini. Screen, battery replacement and other services for all iPhone models with warranty.',
+};
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": lang === 'ru' ? 'Главная' : lang === 'en' ? 'Home' : 'Sākums', "item": `${siteUrl}${getLocalizedPath('/', lang)}` },
+    { "@type": "ListItem", "position": 2, "name": lang === 'ru' ? 'Ремонт iPhone' : lang === 'en' ? 'iPhone Repair' : 'iPhone remonts', "item": `${siteUrl}${getLocalizedPath('/apple-serviss/iphone-remonts/', lang)}` }
+  ]
+};
+---
+
+<BaseLayout
+  title={titles[lang] || titles.lv}
+  description={descriptions[lang] || descriptions.lv}
+  lang={lang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h1 class="text-4xl font-extrabold text-text-primary tracking-tight sm:text-5xl">
+          {lang === 'ru' ? 'Ремонт iPhone' : lang === 'en' ? 'iPhone Repair' : 'iPhone remonts'}
+        </h1>
+        <p class="mt-4 text-lg text-text-secondary">
+          {lang === 'ru'
+            ? 'Выберите модель iPhone ниже, чтобы посмотреть подробные цены на ремонт.'
+            : lang === 'en'
+            ? 'Select your iPhone model below to see detailed repair prices.'
+            : 'Izvēlieties savu iPhone modeli zemāk, lai apskatītu detalizētas remonta cenas.'}
+        </p>
+      </div>
+
+      <img
+        src="/images/ifixit_raper.webp"
+        alt={lang === 'ru' ? 'Вскрытые iPhone в процессе ремонта' : lang === 'en' ? 'Opened iPhones during repair' : 'Atvērtie iPhone remonta procesā'}
+        class="w-full aspect-[21/9] object-cover rounded-2xl border border-white/10 shadow-sm mb-12"
+        loading="eager"
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {models.map((model) => (
+          <a
+            href={getLocalizedPath(`/apple-serviss/iphone-remonts/${model.slug}/`, lang)}
+            class="bg-graphite-surface p-6 rounded-2xl border border-white/10 card-shadow hover:bg-graphite-hover hover:border-white/20 transition-colors block text-center"
+          >
+            <img
+              src={getIPhoneImageUrl(model.slug)}
+              alt={model.name}
+              class="h-28 w-auto mx-auto object-contain mb-4 drop-shadow-md"
+              loading="lazy"
+              onerror="this.remove()"
+            />
+            <span class="text-xs text-text-muted font-bold uppercase tracking-wider block mb-1">Apple</span>
+            <h3 class="text-lg font-bold text-text-primary">{model.name}</h3>
+            <span class="text-sm font-semibold text-brand-orange mt-4 inline-flex items-center space-x-1">
+              <span>{lang === 'ru' ? 'Смотреть цены' : lang === 'en' ? 'View prices' : 'Skatīt cenas'}</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

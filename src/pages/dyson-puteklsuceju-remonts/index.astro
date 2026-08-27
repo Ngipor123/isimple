@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+
+const lang = 'lv';
+
+const title = 'Dyson putekļsūcēju un fēnu remonts Rīgā — iSimple.lv';
+const description = 'Profesionāls Dyson fēnu, Airwrap staileru un bezvadu putekļsūcēju remonts Dreiliņos, Rīgā. Diagnostika bez maksas, garantija visiem darbiem. Zvanīt: +371 22 487 593.';
+
+const siteUrl = 'https://isimple.lv';
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Sākums", "item": `${siteUrl}/` },
+    { "@type": "ListItem", "position": 2, "name": "Dyson putekļsūcēju remonts", "item": `${siteUrl}/dyson-puteklsuceju-remonts/` }
+  ]
+};
+
+interface RepairService {
+  name: string;
+  price: string;
+}
+
+const services: RepairService[] = [
+  { name: 'Diagnostika', price: 'Bezmaksas / 0 €' },
+  { name: 'Barošanas kabeļa maiņa', price: 'no 35 €' },
+  { name: 'Dzinēja maiņa', price: 'no 60 €' },
+  { name: 'Vadības plates remonts', price: 'no 50 €' },
+  { name: 'Filtru tīrīšana / maiņa', price: 'no 25 €' },
+  { name: 'Akumulatora maiņa (bezvadu putekļsūcēji)', price: 'no 45 €' },
+  { name: 'Termostata maiņa (fēni/Airwrap)', price: 'no 40 €' },
+  { name: 'Ventilators / turbīna', price: 'no 55 €' },
+];
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Hero Section -->
+  <section class="bg-graphite-header pt-16 pb-12 border-b border-white/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="section-label mb-4">Dyson remonts · Dreiliņi, Rīga</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-text-primary tracking-tight mb-6">
+        Dyson putekļsūcēju, fēnu<br/>un Airwrap staileru remonts <span class="text-brand-orange">Rīgā</span>
+      </h1>
+      <p class="text-lg text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
+        Remontējam Dyson fēnus, Airwrap stailerus un bezvadu putekļsūcējus ar garantiju. Bezmaksas diagnostika, ātra apkalpošana.
+      </p>
+
+      <!-- Giant call button -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10 max-w-md mx-auto">
+        <a
+          href="tel:+37122487593"
+          class="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-hover text-graphite-header font-bold text-base py-3 px-6 rounded-lg transition-all duration-150 active:scale-[0.98] w-full sm:w-auto"
+        >
+          📞 Zvanīt: +371 22 487 593
+        </a>
+        <a
+          href="/kontakti/"
+          class="btn-secondary w-full sm:w-auto"
+        >
+          Pieteikt remontu
+        </a>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="flex flex-wrap items-center justify-between gap-y-3 gap-x-6 p-4 bg-graphite-surface border border-white/10 rounded-lg text-sm text-text-secondary font-medium max-w-lg mx-auto">
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+          <span>Ātrākais remonts: <strong class="text-text-primary font-semibold">20 min</strong></span>
+        </div>
+        <span class="hidden md:inline text-white/10">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+          <span>Garantija: <strong class="text-text-primary font-semibold">6 mēn.</strong></span>
+        </div>
+        <span class="hidden md:inline text-white/10">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+          <span>Diagnostika: <strong class="text-text-primary font-semibold">0 €</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <div class="py-16 bg-graphite-bg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+        <!-- Content -->
+        <div class="lg:col-span-8 space-y-8">
+          <div class="bg-graphite-surface p-8 rounded-lg border border-white/10 space-y-6 text-text-secondary">
+            <span class="text-xs text-brand-orange font-bold uppercase tracking-wider block">Dyson</span>
+
+            <img
+              src="/images/dyson/dyson-hair-dryer.webp"
+              alt="Meistars labo Dyson fēnu"
+              class="w-full aspect-[16/9] object-cover rounded-lg border border-white/10 shadow-sm"
+              loading="eager"
+            />
+
+            <h2 class="text-2xl font-bold text-text-primary pt-4">Dyson remonta cenas</h2>
+            <div class="overflow-x-auto rounded-lg border border-white/10">
+              <table class="min-w-full divide-y divide-white/10 text-sm">
+                <thead class="bg-graphite-header">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-left font-semibold text-text-secondary uppercase tracking-wider">
+                      Pakalpojums
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right font-semibold text-text-secondary uppercase tracking-wider">
+                      Cena (sākot no)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5 bg-graphite-surface">
+                  {services.map((service) => (
+                    <tr>
+                      <td class="px-6 py-4 font-medium text-text-primary">
+                        {service.name}
+                      </td>
+                      <td class="px-6 py-4 text-right font-bold text-brand-orange">
+                        {service.price}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-xs text-text-muted italic">
+              * Precīzu cenu noteiks pēc bezmaksas diagnostikas. Cenas var atšķirties atkarībā no ierīces modeļa un bojājuma veida.
+            </p>
+
+            <!-- SEO text -->
+            <div class="space-y-4 text-text-secondary leading-relaxed">
+              <h2 class="text-2xl font-bold text-text-primary">Ko mēs remontējam?</h2>
+              <p>
+                iSimple servisa centrā remontējam visus populārākos Dyson produktus — <strong>Dyson Supersonic</strong> matu fēnus, 
+                <strong>Dyson Airwrap</strong> stailerus, <strong>Dyson Corrale</strong> taisnošanas gludekļus, kā arī bezvadu 
+                putekļsūcējus: <strong>Dyson V8, V10, V11, V12, V15</strong> un citus modeļus.
+              </p>
+              <p>
+                Mūsu inženieriem ir ilggadēja pieredze Dyson ierīču remontā. Katrs remonts tiek veikts ar augstas kvalitātes 
+                rezerves daļām un tiek nodrošināts ar <strong>6 mēnešu garantiju</strong>. Diagnostiku veicam bez maksas — 
+                maksājat tikai par remontu.
+              </p>
+              <p>
+                Uzņēmums iSimple.LV ir dibināts 2021. gadā, apvienojot mobilo tālruņu un portatīvās datortehnikas servisa 
+                inženierus ar ilggadēju pieredzi. Servisa centrs atrodas <strong>T/C Sāga, Biķeru ielā 4, Dreiliņos</strong>, 
+                Ropažu novadā — ērti pieejams ar stāvvietu.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Sidebar -->
+        <div class="lg:col-span-4">
+          <ContactForm lang={lang} />
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Other services cross-links -->
+  <section class="py-12 bg-graphite-alt border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-xl font-bold text-text-primary mb-6">Citi mūsu pakalpojumi</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <a href="/iphone-remonts/" class="bg-graphite-surface rounded-lg p-4 border border-white/10 hover:border-brand-orange hover:shadow-md transition-all text-center group">
+          <p class="font-semibold text-text-secondary group-hover:text-brand-orange text-sm">iPhone remonts</p>
+        </a>
+        <a href="/ipad-remonts/" class="bg-graphite-surface rounded-lg p-4 border border-white/10 hover:border-brand-orange hover:shadow-md transition-all text-center group">
+          <p class="font-semibold text-text-secondary group-hover:text-brand-orange text-sm">iPad remonts</p>
+        </a>
+        <a href="/telefonu-remonts/" class="bg-graphite-surface rounded-lg p-4 border border-white/10 hover:border-brand-orange hover:shadow-md transition-all text-center group">
+          <p class="font-semibold text-text-secondary group-hover:text-brand-orange text-sm">Telefonu remonts</p>
+        </a>
+        <a href="/datoru-remonts/" class="bg-graphite-surface rounded-lg p-4 border border-white/10 hover:border-brand-orange hover:shadow-md transition-all text-center group">
+          <p class="font-semibold text-text-secondary group-hover:text-brand-orange text-sm">Datoru remonts</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
