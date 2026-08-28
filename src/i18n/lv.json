@@ -36,7 +36,7 @@
   "contacts_info": {
     "title": "Kontakti",
     "address_label": "Adrese",
-    "address_value": "Biķeru iela 4, Dreiliņi, Stopiņu pagasts, Ropažu novads, LV-2130",
+    "address_value": "T/C Sāga, Biķeru iela 4, Dreiliņi, Stopiņu pagasts, Ropažu novads, LV-2130",
     "phone_label": "Tālrunis",
     "email_label": "E-pasts",
     "working_hours_label": "Darba laiks",
@@ -77,7 +77,7 @@
   "branch": {
     "title": "Mūsu filiāle",
     "saga_name": "T/C Sāga filiāle",
-    "saga_address": "Biķeru iela 4, Dreiliņi, LV-2130",
+    "saga_address": "T/C Sāga, Biķeru iela 4, Dreiliņi, LV-2130",
     "saga_phone": "+371 22 487 593",
     "open": "Atvērts",
     "closed": "Slēgts",

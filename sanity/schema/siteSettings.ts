@@ -21,7 +21,7 @@ export default defineType({
       name: 'address',
       title: 'Address Text',
       type: 'string',
-      initialValue: 'Biķeru iela 4, Dreiliņi, Stopiņu pagasts, Ropažu novads, LV-2130',
+      initialValue: 'T/C Sāga, Biķeru iela 4, Dreiliņi, Stopiņu pagasts, Ropažu novads, LV-2130',
     }),
     defineField({
       name: 'facebook',
