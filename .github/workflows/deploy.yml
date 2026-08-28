@@ -29,7 +29,19 @@ jobs:
           SANITY_PROJECT_ID: 'w4o960ve'
           SANITY_DATASET: 'production'
 
-      - name: Deploy to FTP Server
+      - name: Deploy to Main Domain
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: dist/
+          server-dir: /domains/isimple.lv/public_html/
+          port: 21
+          protocol: ftp
+          dangerous-clean-slate: false
+
+      - name: Deploy to Test Subdomain
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
