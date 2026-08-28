@@ -90,10 +90,17 @@ const t = useTranslations(lang);
 
     if (submitBtn) submitBtn.disabled = true;
 
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => { data[key] = value });
+
     fetch(form.action || 'https://formspree.io/f/mwlkkjon', {
       method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: new FormData(form),
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (response.ok) {
