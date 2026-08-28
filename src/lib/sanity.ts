@@ -35,7 +35,7 @@ export const sanityClient = createClient({
   projectId: projectId === 'placeholder' ? 'unconfigured' : projectId,
   dataset,
   apiVersion: '2024-03-11',
-  useCdn: true,
+  useCdn: false,
 });
 
 const builder = imageUrlBuilder(sanityClient);
