@@ -27,7 +27,8 @@ export default defineType({
       type: 'object',
       fields: [
         { name: 'screen_orig', title: 'Screen Original', type: 'number' },
-        { name: 'screen_copy', title: 'Screen Copy', type: 'number' },
+        { name: 'screen_copy', title: 'Screen Copy A', type: 'number' },
+        { name: 'screen_oled', title: 'Screen OLED Copy', type: 'number' },
         { name: 'battery', title: 'Battery', type: 'number' },
         { name: 'camera', title: 'Camera', type: 'number' },
         { name: 'body', title: 'Body/Back Glass', type: 'number' },

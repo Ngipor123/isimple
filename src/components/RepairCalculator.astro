@@ -81,6 +81,7 @@ const defaultModel = models[0] || { name: '', slug: '', prices: {} };
   contact_us: t('calculator.contact_us'),
   screen_orig: t('calculator.types.screen_orig'),
   screen_copy: t('calculator.types.screen_copy'),
+  screen_oled: t('calculator.types.screen_oled'),
   battery: t('calculator.types.battery'),
   camera: t('calculator.types.camera'),
   body: t('calculator.types.body'),
@@ -127,6 +128,7 @@ const defaultModel = models[0] || { name: '', slug: '', prices: {} };
           const repairTypes = [
             { key: 'screen_orig', label: translations.screen_orig, time: '40-60 min', guarantee: translations.guarantee_6m },
             { key: 'screen_copy', label: translations.screen_copy, time: '40-60 min', guarantee: translations.guarantee_3m },
+            { key: 'screen_oled', label: translations.screen_oled, time: '40-60 min', guarantee: translations.guarantee_3m },
             { key: 'battery', label: translations.battery, time: '30-40 min', guarantee: translations.guarantee_6m },
             { key: 'camera', label: translations.camera, time: '40-60 min', guarantee: translations.guarantee_6m },
             { key: 'body', label: translations.body, time: '2-4 h', guarantee: translations.guarantee_6m },

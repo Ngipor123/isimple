@@ -22,7 +22,8 @@
     "time": "Время",
     "types": {
       "screen_orig": "Экран (Оригинал)",
-      "screen_copy": "Экран (Копия)",
+      "screen_copy": "Экран (Копия A)",
+      "screen_oled": "Экран (Копия OLED)",
       "battery": "Батарея",
       "camera": "Камера",
       "body": "Корпус",

@@ -22,7 +22,8 @@
     "time": "Time",
     "types": {
       "screen_orig": "Screen (Original)",
-      "screen_copy": "Screen (Copy)",
+      "screen_copy": "Screen (Copy A)",
+      "screen_oled": "Screen (OLED Copy)",
       "battery": "Battery",
       "camera": "Camera",
       "body": "Body/Back Glass",

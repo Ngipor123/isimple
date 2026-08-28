@@ -22,7 +22,8 @@
     "time": "Laiks",
     "types": {
       "screen_orig": "Ekrāns (Oriģināls)",
-      "screen_copy": "Ekrāns (Kopija)",
+      "screen_copy": "Ekrāns (Kopija A)",
+      "screen_oled": "Ekrāns (Kopija OLED)",
       "battery": "Baterija",
       "camera": "Kamera",
       "body": "Korpuss",
