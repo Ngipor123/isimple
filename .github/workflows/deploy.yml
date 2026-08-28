@@ -37,4 +37,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: dist/
           server-dir: /domains/isimple.unri.lv/public_html/
+          port: 21
+          protocol: ftp
           dangerous-clean-slate: false
