@@ -3,6 +3,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { getIPhoneModels } from '../../../../lib/sanity';
 import { useTranslations, getLocalizedPath } from '../../../../lib/i18n';
 import { getIPhoneImageUrl } from '../../../../lib/iphone-images';
+import { sortIPhoneModelsChronologically } from '../../../../lib/iphone-sorting';
 
 export async function getStaticPaths() {
   return [
@@ -12,7 +13,8 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const models = await getIPhoneModels();
+const rawModels = await getIPhoneModels();
+const models = sortIPhoneModelsChronologically(rawModels);
 
 const titles: Record<string, string> = {
   lv: 'iPhone remonts Rīgā — iSimple.lv',

@@ -4,6 +4,7 @@ import ReviewsSection from '../components/ReviewsSection.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { getIPhoneModels, getServices, getPosts } from '../lib/sanity';
 import { useTranslations, getLocalizedPath } from '../lib/i18n';
+import { sortIPhoneModelsChronologically } from '../lib/iphone-sorting';
 
 // Language configuration
 const lang = 'lv';
@@ -11,11 +12,12 @@ const t = useTranslations(lang);
 
 // Fetch data
 const rawModels = await getIPhoneModels();
+const sortedModels = sortIPhoneModelsChronologically(rawModels);
 const services = await getServices();
 const posts = await getPosts();
 
 // Build iPhone models specifically for our structure
-const models = rawModels.map(m => ({
+const models = sortedModels.map(m => ({
   name: m.name,
   slug: m.slug,
   prices: m.prices

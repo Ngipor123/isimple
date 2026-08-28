@@ -3,9 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getIPhoneModels } from '../../lib/sanity';
 import { getIPhoneImageUrl } from '../../lib/iphone-images';
 import ContactForm from '../../components/ContactForm.astro';
+import { sortIPhoneModelsChronologically } from '../../lib/iphone-sorting';
 
 const lang = 'lv';
-const models = await getIPhoneModels();
+const rawModels = await getIPhoneModels();
+const models = sortIPhoneModelsChronologically(rawModels);
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
