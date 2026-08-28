@@ -338,7 +338,7 @@ export async function getIPhoneModels() {
     return MOCK_IPHONE_MODELS;
   }
   try {
-    const query = `*[_type == "iphone_model"] | order(name desc) {
+    const query = `*[_type == "iphone_model"] | order(_createdAt asc) {
       name,
       "slug": slug.current,
       prices,
